@@ -9,6 +9,10 @@ it into your own project. No framework to buy into, no account to sign up for.
 
 New skill drops roughly once a week — **star the repo** to catch each one.
 
+![kb — a knowledge base for AI agents that flags its own stale docs](./assets/kb-demo.gif)
+
+*Above: the [`kb`](./skills/kb-cli) skill in action — one command audits your entire knowledge base and catches what's gone stale.*
+
 ---
 
 ## What's inside
