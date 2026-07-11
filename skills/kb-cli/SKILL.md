@@ -1,7 +1,7 @@
 ---
 name: agent-kb
 description: Use when managing an agent-facing knowledge base — keeping docs fresh, checking for stale or low-confidence articles, compiling one wiki source into every IDE's config file (CLAUDE.md, AGENTS.md, GEMINI.md, Cursor/Cline rules), regenerating the article index, scaffolding a new project wiki, searching wiki articles by confidence, or filing new sources into a wiki. Trigger words include "kb search", "kb lint", "kb compile", "kb index", "kb init", "knowledge base", "wiki health", "stale docs", "update the wiki", "compile IDE config", "new project wiki".
-author: jake@travelry.net
+author: "@JakePaterson"
 ---
 
 # agent-kb

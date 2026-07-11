@@ -16,6 +16,15 @@ export interface InitResult {
  * directory already exists — this only creates new wikis.
  */
 export function initProject(kbRoot: string, project: string, displayName?: string): InitResult {
+  // The project name becomes a directory name, so it must not be able to escape
+  // kbRoot — `kb init ../../etc` would otherwise scaffold outside the vault.
+  if (!/^[A-Za-z0-9._-]+$/.test(project) || project === '.' || project === '..') {
+    return {
+      success: false,
+      message: `Invalid project name "${project}". Use letters, numbers, dots, dashes or underscores — no path separators.`,
+    };
+  }
+
   const wikiDir = resolve(kbRoot, project);
   if (existsSync(wikiDir)) {
     return {

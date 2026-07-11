@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
-import { resolve, basename, dirname } from 'path';
+import { resolve, basename, dirname, relative, isAbsolute } from 'path';
 import { fileURLToPath } from 'url';
 import { globSync } from 'glob';
 import Handlebars from 'handlebars';
@@ -10,6 +10,20 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /** Templates ship inside the package (templates/*.hbs next to src/), not in the vault. */
 export const DEFAULT_TEMPLATES_DIR = resolve(__dirname, '..', 'templates');
+
+/**
+ * True if `child` resolves to a location inside `parent`.
+ *
+ * `kb.config.json` supplies both the template name and the output path, so a
+ * hostile (or careless) config could otherwise use `../` or an absolute path to
+ * read a file outside the templates dir, or overwrite something outside the
+ * project — `~/.zshrc`, `~/.ssh/authorized_keys`. Every config-derived path is
+ * checked against its allowed root before we read or write it.
+ */
+export function isWithin(parent: string, child: string): boolean {
+  const rel = relative(resolve(parent), resolve(child));
+  return rel !== '' && !rel.startsWith('..') && !isAbsolute(rel);
+}
 
 export interface KeyArticle {
   name: string;
@@ -134,8 +148,25 @@ export function compileConfigs(
     for (const ide of target.ides) {
       try {
         const templatePath = resolve(templatesDir, ide.templateName);
+        // A config-supplied template name must not escape the bundled templates dir.
+        if (!isWithin(templatesDir, templatePath)) {
+          errors.push(
+            `Refusing to read template outside ${templatesDir}: ${ide.templateName}`
+          );
+          continue;
+        }
         if (!existsSync(templatePath)) {
           errors.push(`Template not found: ${ide.templateName}`);
+          continue;
+        }
+
+        // A config-supplied output path must not escape the project directory.
+        // Without this, `"output": "../../../.zshrc"` (or an absolute path) would
+        // let any kb.config.json overwrite arbitrary files on the user's machine.
+        if (!isWithin(target.projectDir, ide.outputPath)) {
+          errors.push(
+            `Refusing to write outside project dir: ${ide.outputPath} escapes ${target.projectDir}`
+          );
           continue;
         }
 
