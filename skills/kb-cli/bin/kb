@@ -1,0 +1,3 @@
+#!/bin/bash
+TOOLS_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+exec "$TOOLS_DIR/node_modules/.bin/tsx" "$TOOLS_DIR/src/cli.ts" "$@"

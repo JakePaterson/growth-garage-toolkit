@@ -1,0 +1,39 @@
+{
+  "name": "agent-kb",
+  "version": "1.0.0",
+  "description": "A knowledge base CLI for AI coding agents — tracks article staleness/confidence, compiles one wiki into every IDE's config file (CLAUDE.md, AGENTS.md, Cursor rules), and provides confidence-scored search.",
+  "license": "MIT",
+  "private": false,
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "bin": {
+    "kb": "./bin/kb"
+  },
+  "files": [
+    "bin",
+    "src",
+    "templates",
+    "examples",
+    "schema.json",
+    "CONVENTIONS.md"
+  ],
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "glob": "^11.0.1",
+    "gray-matter": "^4.0.3",
+    "handlebars": "^4.7.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.1.0"
+  }
+}

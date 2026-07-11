@@ -1,0 +1,13 @@
+# Example Project Knowledge Base
+
+> A minimal example vault for agent-kb. Start here, then read _summary.md.
+
+This file is the top-level entry point for an agent reading this vault
+just-in-time: read this, then `_summary.md`, then only the specific
+article(s) you need — avoid loading the whole vault into context at once.
+
+## Articles
+- widget-api.md — the current widget API
+- auth-flow.md — the auth pattern the widget API depends on
+- legacy-endpoint.md — a deprecated endpoint (deliberately stale, for demo purposes)
+- rate-limit-policy.md — a settled decision (`reverify_after: never`, for demo purposes)

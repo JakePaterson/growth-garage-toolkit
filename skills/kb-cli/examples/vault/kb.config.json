@@ -1,0 +1,14 @@
+{
+  "projects": [
+    {
+      "name": "example-project",
+      "wikiPath": ".",
+      "path": "../target-project",
+      "ideConfigs": [
+        { "template": "claude-md.hbs", "output": "CLAUDE.md", "mode": "inject" },
+        { "template": "agents-md.hbs", "output": "AGENTS.md", "mode": "inject" }
+      ]
+    }
+  ],
+  "bookmarkSource": "./bookmarks-example"
+}

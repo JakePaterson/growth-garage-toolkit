@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Wiki Article Frontmatter",
+  "type": "object",
+  "required": ["title"],
+  "properties": {
+    "title": { "type": "string" },
+    "description": { "type": "string", "maxLength": 200 },
+    "project": { "type": "string" },
+    "category": { "type": "string" },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "url": { "type": "string" },
+          "fetched": { "type": "string", "format": "date" }
+        }
+      }
+    },
+    "confidence": { "type": "string", "enum": ["high", "medium", "low", "unverified"] },
+    "last_verified": { "type": "string", "format": "date" },
+    "last_updated": { "type": "string", "format": "date" },
+    "reverify_after": { "type": "string", "pattern": "^(\\d+d|never)$" },
+    "status": { "type": "string", "enum": ["current", "migrating", "deprecated", "planned"] }
+  }
+}

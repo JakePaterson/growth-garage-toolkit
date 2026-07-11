@@ -1,0 +1,86 @@
+#!/bin/bash
+# Example SessionStart hook for Claude Code — injects KB context into every
+# session. This is a TEMPLATE: copy it somewhere on disk, fill in your own
+# KB_ROOT / project mapping, then wire it up under `hooks.SessionStart` in
+# your ~/.claude/settings.json. It is not installed or run automatically.
+#
+# What it does:
+#   1. Points the agent at your vault and the `kb` commands.
+#   2. Optionally detects which project the session's cwd belongs to, so it
+#      can point the agent at that project's specific wiki subdirectory.
+#   3. Runs `kb lint` and surfaces stale/broken/low-confidence articles so
+#      the agent notices rot in whatever it's about to touch.
+
+set -e
+
+# EDIT ME: where your vault lives, and where the compiled `kb` binary is.
+KB_ROOT="$HOME/knowledge-base"
+KB_BIN="$KB_ROOT/node_modules/.bin/kb"   # or wherever you installed agent-kb
+
+# Graceful failure if kb is not installed — just produce no context
+if [ ! -x "$KB_BIN" ]; then
+  echo '{}'
+  exit 0
+fi
+
+# Read hook input from stdin (JSON event data)
+INPUT=$(cat)
+
+# Extract cwd from the event — fall back to PWD if not available
+CWD=$(printf '%s' "$INPUT" | python3 -c "
+import json, sys
+try:
+    data = json.load(sys.stdin)
+    print(data.get('cwd', ''))
+except Exception:
+    pass
+" 2>/dev/null)
+CWD="${CWD:-$PWD}"
+
+CONTEXT="## Knowledge Base Available
+
+A curated knowledge base exists at $KB_ROOT. Use these commands:
+- \`kb search \"<query>\"\` — search wiki articles
+- \`kb lint\` — check wiki health
+- \`kb compile\` — regenerate IDE config files
+
+**Reading discipline:** Start from \`llms.txt\` -> a project's \`_summary.md\` -> \`_index.md\`, then open specific articles."
+
+# EDIT ME: map cwd -> the project subdirectory in your vault. This example
+# maps two placeholder projects; replace with your own paths and wiki names.
+PROJECT=""
+case "$CWD" in
+  "$HOME/project-one"*) PROJECT="project-one" ;;
+  "$HOME/project-two"*) PROJECT="project-two" ;;
+esac
+
+if [ -n "$PROJECT" ]; then
+  CONTEXT="$CONTEXT
+
+**This project's wiki:** \`$KB_ROOT/$PROJECT/\`"
+fi
+
+# Run kb lint and surface issues (condensed)
+LINT_FULL=$("$KB_BIN" lint 2>/dev/null || true)
+LINT_STALE=$(printf '%s' "$LINT_FULL" | awk '/^STALE$/,/^$/' | grep -v "^$" | grep -v "^STALE$" | head -10)
+
+if [ -n "$LINT_STALE" ]; then
+  CONTEXT="$CONTEXT
+
+**Wiki health (from kb lint) — stale articles:**
+$LINT_STALE
+
+If your work touches any of these, verify and update them."
+fi
+
+# Output as JSON using python3 for safe escaping
+printf '%s' "$CONTEXT" | python3 -c "
+import json, sys
+ctx = sys.stdin.read()
+print(json.dumps({
+    'hookSpecificOutput': {
+        'hookEventName': 'SessionStart',
+        'additionalContext': ctx
+    }
+}))
+"

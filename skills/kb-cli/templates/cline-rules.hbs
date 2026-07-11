@@ -1,0 +1,24 @@
+# Knowledge Base
+
+A curated knowledge base exists at ~/knowledge-base/
+This project's wiki: ~/knowledge-base/{{project}}/
+
+**MANDATORY:** Before integration work or unfamiliar architecture, search the KB. After significant changes, update the relevant article. Full workflow: `~/knowledge-base/CONTRIBUTING.md`.
+
+## Quick Start
+1. Read ~/knowledge-base/{{project}}/_summary.md for project overview
+2. Use `kb search "<query>"` to find specific articles
+3. Read ~/knowledge-base/commons/_summary.md for shared framework/service docs
+
+## Key Articles
+{{#each keyArticles}}
+- {{this.name}} — {{{this.description}}}
+{{/each}}
+
+## Tools
+- `kb search "<query>"` — search the wiki
+- `kb ingest --url "<url>"` — ingest a new source
+- `kb lint --project {{project}}` — check wiki health
+- `kb compile` — regenerate this file
+
+See `~/knowledge-base/CONTRIBUTING.md` for: when to check vs update, frontmatter conventions, MCP verification map, and hygiene rules.
