@@ -67,7 +67,7 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-famil
 .edges{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;}
 .edges path{fill:none;stroke:var(--border-hard);stroke-width:1.5;opacity:.16;transition:opacity .18s,stroke-width .18s;}
 /* Dim only the NON-highlighted edges. Without :not(.hot) this rule out-specifies
-   `.edges path.hot` and dims the highlighted lines too — they get the right colour
+   `.edges path.hot` and dims the highlighted lines too: they get the right colour
    at ~4% opacity, so selecting a node makes its own connectors invisible. */
 .canvas.focus .edges path:not(.hot){opacity:.04;}
 .edges path.hot{opacity:1;stroke-width:3;}
@@ -162,7 +162,7 @@ a{color:var(--accent);}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px;}
 
 /* Floating over the board, so it can land on top of a node in the bottom band.
-   Collapsible for exactly that reason — the colour key stops being useful once
+   Collapsible for exactly that reason: the colour key stops being useful once
    you've learned it, and nobody should have to pan the map to read a card. */
 .legend{position:fixed;left:18px;bottom:62px;z-index:20;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:12px;padding:9px 12px 10px;box-shadow:var(--shadow);font-family:var(--mono);font-size:10.5px;max-width:240px;}
 .legend .lgh{font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);margin:0;padding:0;background:none;border:none;font-family:var(--mono);cursor:pointer;display:flex;align-items:center;gap:7px;width:100%;text-align:left;}
@@ -303,7 +303,7 @@ function renderOverview(){
   document.getElementById("ovback").style.display = "none";
   document.getElementById("howbtn").style.display = "none";
   document.getElementById("title").innerHTML = '<span class="k">'+esc(DATA.kicker || "System Map")+'</span> '+esc(DATA.subtitle || "How everything connects");
-  document.getElementById("hint").textContent = "drag to pan · click a node — its links colour by type";
+  document.getElementById("hint").textContent = "drag to pan · click a node: its links colour by type";
   document.getElementById("legend").style.display = "";
   document.getElementById("search").style.display = "";
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * living-system-map — build a self-contained interactive system map from one data file.
+ * living-system-map: build a self-contained interactive system map from one data file.
  *
  *   node build.js [data-file] [-o output.html]
  *
@@ -24,7 +24,7 @@ for (let i = 0; i < argv.length; i++) {
 dataPath = path.resolve(dataPath || 'system-map.data.js');
 outPath = path.resolve(outPath || path.join(path.dirname(dataPath), 'system-map.html'));
 
-/** Show whichever of the relative/absolute path is shorter — `../../../..` chains
+/** Show whichever of the relative/absolute path is shorter: `../../../..` chains
  *  are harder to read than the absolute path they resolve to. */
 function shortPath(p) {
   const rel = path.relative(process.cwd(), p);
@@ -99,9 +99,9 @@ function arr(v, name) {
   return v;
 }
 
-if (!stages.length) errors.push('`stages` is empty — you need at least one band for nodes to sit in.');
-if (!domains.length) errors.push('`domains` is empty — you need at least one colour family.');
-if (!nodes.length) errors.push('`nodes` is empty — nothing to draw.');
+if (!stages.length) errors.push('`stages` is empty: you need at least one band for nodes to sit in.');
+if (!domains.length) errors.push('`domains` is empty: you need at least one colour family.');
+if (!nodes.length) errors.push('`nodes` is empty: nothing to draw.');
 
 const stageIds = new Set(), domainIds = new Set(), statusIds = new Set(), nodeIds = new Set();
 dupCheck(stages, stageIds, 'stage');
@@ -115,7 +115,7 @@ function dupCheck(list, set, label) {
     if (!item.id) { errors.push(`${label}[${i}] is missing \`id\`.`); return; }
     if (set.has(item.id)) errors.push(`duplicate ${label} id "${item.id}".`);
     set.add(item.id);
-    if (!item.label && !item.name) warnings.push(`${label} "${item.id}" has no \`label\` — the id will be shown instead.`);
+    if (!item.label && !item.name) warnings.push(`${label} "${item.id}" has no \`label\`: the id will be shown instead.`);
   });
 }
 
@@ -128,7 +128,7 @@ nodes.forEach((n, i) => {
   if (!n.domain) errors.push(`${where} is missing \`domain\`.`);
   else if (!domainIds.has(n.domain)) errors.push(`${where} has domain "${n.domain}" which is not in \`domains\`.`);
   if (n.status && !statusIds.has(n.status)) errors.push(`${where} has status "${n.status}" which is not in \`statuses\`.`);
-  if (!n.role) warnings.push(`${where} has no \`role\` — the side panel will look empty.`);
+  if (!n.role) warnings.push(`${where} has no \`role\`: the side panel will look empty.`);
 
   if (n.steps) {
     const spine = Array.isArray(n.steps.spine) ? n.steps.spine : [];
@@ -144,7 +144,7 @@ nodes.forEach((n, i) => {
       errors.push(`${where} has branchFrom "${n.steps.branchFrom}" which is not one of its steps.`);
     }
     if (parallel.length && !n.steps.branchFrom) {
-      warnings.push(`${where} has parallel steps but no \`branchFrom\` — they will hang off the first step.`);
+      warnings.push(`${where} has parallel steps but no \`branchFrom\`: they will hang off the first step.`);
     }
   }
 });
@@ -159,7 +159,7 @@ edges.forEach((e, i) => {
   if (e.from && e.from === e.to) warnings.push(`${where} points "${e.from}" at itself; it will not be drawn usefully.`);
   if (!e.kind) errors.push(`${where} is missing \`kind\` (one of: ${KINDS.join(', ')}).`);
   else if (!KINDS.includes(e.kind)) errors.push(`${where} has kind "${e.kind}"; must be one of: ${KINDS.join(', ')}.`);
-  if (!e.label) warnings.push(`${where} (${e.from} → ${e.to}) has no \`label\` — the panel will show the bare kind.`);
+  if (!e.label) warnings.push(`${where} (${e.from} → ${e.to}) has no \`label\`: the panel will show the bare kind.`);
 });
 
 // A stage nobody uses draws an empty band label; more often it means a typo.
@@ -232,7 +232,7 @@ out = out
   .replace(/__KICKER__/g, escHtml(payload.kicker))
   .replace(/__SUBTITLE__/g, escHtml(payload.subtitle));
 
-if (out === before) fail('template.html has no placeholders left — is it the right file?');
+if (out === before) fail('template.html has no placeholders left. Is it the right file?');
 if (out.includes('/*__DATA__*/')) fail('failed to inject data into template.html.');
 
 function escHtml(s) {

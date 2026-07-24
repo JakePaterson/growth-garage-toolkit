@@ -4,11 +4,11 @@
 
 ```js
 module.exports = {
-  title: 'Acme — System Map',   // browser tab
+  title: 'Acme: System Map',   // browser tab
   kicker: 'System Map',          // small label left of the header text
   subtitle: 'How everything connects · traced 2026-07-24',
 
-  layout: { perRow: 6 },         // optional, default 6 — nodes per row before wrapping
+  layout: { perRow: 6 },         // optional, default 6 (nodes per row before wrapping)
 
   stages:   [ ... ],
   domains:  [ ... ],
@@ -22,7 +22,7 @@ Run `node build.js` and it validates everything below before writing a single by
 
 ---
 
-## `stages` — the horizontal bands
+## `stages`: the horizontal bands
 
 Top to bottom, in order. This is the journey through your product.
 
@@ -30,7 +30,7 @@ Top to bottom, in order. This is the journey through your product.
 |---|---|---|
 | `id` | yes | referenced by `node.stage` |
 | `label` | yes | shown on the band |
-| `numbered` | no | `false` keeps it out of the 1-2-3 sequence — use it for the cross-cutting band |
+| `numbered` | no | `false` keeps it out of the 1-2-3 sequence. Use it for the cross-cutting band |
 
 ```js
 stages: [
@@ -40,7 +40,7 @@ stages: [
 ]
 ```
 
-## `domains` — the colour families
+## `domains`: the colour families
 
 What kind of thing a node is, or who owns it. Three to six works; past that the colours stop being distinguishable.
 
@@ -51,9 +51,9 @@ What kind of thing a node is, or who owns it. Three to six works; past that the 
 | `color` | no | hex for light mode; omit to take the built-in palette |
 | `colorDark` | no | hex for dark mode; defaults to `color`, then the palette |
 
-Omit colours entirely and domains are assigned, in order: indigo, teal, amber, pink, slate, violet, green, red — each with a lighter dark-mode twin. Statuses get green, amber, violet, grey, teal. The palettes vary lightness as well as hue so they stay distinguishable with colour-vision deficiency. Both live at the top of `build.js` if you want to change them globally.
+Omit colours entirely and domains are assigned, in order: indigo, teal, amber, pink, slate, violet, green, red (each with a lighter dark-mode twin). Statuses get green, amber, violet, grey, teal. The palettes vary lightness as well as hue so they stay distinguishable with colour-vision deficiency. Both live at the top of `build.js` if you want to change them globally.
 
-## `statuses` — how finished each thing is
+## `statuses`: how finished each thing is
 
 | field | required | notes |
 |---|---|---|
@@ -63,7 +63,7 @@ Omit colours entirely and domains are assigned, in order: indigo, teal, amber, p
 
 Keep it to three to five values you will actually use. `Live`, `Beta`, `Admin only`, `Half-built` covers most repos.
 
-## `nodes` — the features
+## `nodes`: the features
 
 | field | required | notes |
 |---|---|---|
@@ -77,9 +77,9 @@ Keep it to three to five values you will actually use. `Live`, `Beta`, `Admin on
 | `steps` | no | the step-by-step breakdown, below |
 | `how` | no | an HTML string for the "How it works" panel |
 
-`how` is raw HTML, injected as-is. `<p>`, `<ul>/<li>`, `<code>` and `<div class="sub">` are styled for you. It is your own file, so this is not a security boundary — but do not paste untrusted content into it.
+`how` is raw HTML, injected as-is. `<p>`, `<ul>/<li>`, `<code>` and `<div class="sub">` are styled for you. It is your own file, so this is not a security boundary. But do not paste untrusted content into it.
 
-## `nodes[].steps` — the drill-down
+## `nodes[].steps`: the drill-down
 
 Optional, and worth doing for only a few nodes. Renders a vertical flow you can click through.
 
@@ -102,12 +102,12 @@ Each step:
 | `chip` | no | short highlight on the card, e.g. a model or service name |
 | `what` | no | one or two sentences on what this step does |
 | `note` | no | anything worth knowing that is not a warning |
-| `quirk` | no | a limit or gotcha — rendered in warning red |
+| `quirk` | no | a limit or gotcha (rendered in warning red) |
 | `cost` | no | a cost or rate-limit note |
 | `fallback` | no | array of `{ when, then, why }` |
 | `files` | no | array of `{ path, role }` |
 
-## `edges` — the connections
+## `edges`: the connections
 
 ```js
 { from: 'checkout', to: 'stock', kind: 'triggers', label: 'a paid order reserves copies in' }
@@ -115,7 +115,7 @@ Each step:
 
 | field | required | notes |
 |---|---|---|
-| `from` / `to` | yes | node ids — unknown ids are a build error |
+| `from` / `to` | yes | node ids; unknown ids are a build error |
 | `kind` | yes | `triggers` · `feeds` · `calls` · `reads` · `emits` |
 | `label` | no (but do it) | finishes the sentence `<from> ___ <to>` |
 

@@ -20,7 +20,7 @@ New skill drops roughly once a week — **star the repo** to catch each one.
 | Skill | What it gives you | The number | Status |
 |-------|-------------------|-----------|--------|
 | [**kb-cli**](./skills/kb-cli) | A knowledge base for AI agents that maintains itself — flags its own stale/low-confidence articles and compiles into every IDE's config from one source | Runs a 107-article KB at ~29-day avg freshness | ✅ **Available now** |
-| [**living-system-map**](./skills/living-system-map) | An interactive map of how a whole codebase actually connects — features, not files. An agent traces the repo, one self-contained HTML file comes out | Zero dependencies · works offline · any language | ✅ **Available now** |
+| [**living-system-map**](./skills/living-system-map) | Lets your agent answer "how does this work?" with a clickable map instead of six paragraphs. It traces the code on demand, breaks open only the parts that are actually fiddly, and ships one self-contained HTML file | One file · zero dependencies · any stack | ✅ **Available now** |
 | **gpu-particle-morph** | Smooth 1M+ point WebGL particle systems that survive weak devices — GPU vertex-shader morphs, int16-quantized attributes | 1.1M points · 16.5ms → 9.5ms frame time | 🔜 Week 1 |
 | **svg-to-compositor** | Move SMIL/paint-thread SVG animations onto the compositor for free frames | 15fps → 60fps | 🔜 Week 1 |
 | **claude-code-hooks** | Three hooks that stop Claude Code from wasting tokens: read-once dedup, KB auto-load, cheap-model delegation | 3 hooks, measurable token drop | 🔜 Week 2 |

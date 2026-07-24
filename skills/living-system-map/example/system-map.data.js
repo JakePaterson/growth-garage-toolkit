@@ -1,17 +1,17 @@
 /**
  * Example map for a made-up online bookshop, "Foxglove Books".
- * Nothing here is real — it exists to show the shape of a finished data file.
+ * Nothing here is real. It exists to show the shape of a finished data file.
  *
  * Build it:  node ../build.js system-map.data.js
  */
 
 module.exports = {
-  title: 'Foxglove Books — System Map',
+  title: 'Foxglove Books: System Map',
   kicker: 'System Map',
   subtitle: 'How everything connects',
 
   // Horizontal bands, top to bottom. These should read as the journey through
-  // your product. `numbered: false` keeps a band out of the 1-2-3 sequence —
+  // your product. `numbered: false` keeps a band out of the 1-2-3 sequence:
   // use it for the things that sit underneath everything else.
   stages: [
     { id: 'browse',  label: 'Browse' },
@@ -103,7 +103,7 @@ module.exports = {
       role: 'Takes payment and turns a cart into a real order.',
       how: `
         <p>The amount charged is always recomputed on the server from the cart's book ids.
-        The number the browser sends is only ever used to check the two agree — if they
+        The number the browser sends is only ever used to check the two agree: if they
         differ, the payment is refused rather than adjusted.</p>`,
       steps: {
         spine: [
